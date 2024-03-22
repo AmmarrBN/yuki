@@ -112,18 +112,24 @@
       resize: none;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+    .checklist {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .checklist label {
+      margin-right: 10px;
+      margin-bottom: 10px;
+      width: calc(50% - 10px);
     }
 
     @media screen and (min-width: 768px) {
       .container {
         max-width: 600px;
+      }
+      .checklist label {
+        width: calc(25% - 10px);
       }
     }
   </style>
@@ -148,15 +154,27 @@
   <div id="rateModal" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
-      <h2>Bagaimana aku menurutmu?</h2>
+      <h2>Pesan untuk aku?</h2>
       <textarea id="comment" rows="3" placeholder="Berikan komentar..."></textarea>
       <input type="range" min="10" max="100" value="50" class="slider" id="myRange" oninput="updateTextInput(this.value);">
       <p>Rating: <span id="demo"></span>%</p>
+      <p>Sifat ku menurut mu?:</p>
+      <div class="checklist">
+        <label><input type="checkbox" name="checklist" value="Baik"> Baik</label>
+        <label><input type="checkbox" name="checklist" value="Buruk"> Buruk</label>
+        <label><input type="checkbox" name="checklist" value="Jahat"> Jahat</label>
+        <label><input type="checkbox" name="checklist" value="Ga peka"> Ga peka</label>
+        <label><input type="checkbox" name="checklist" value="Misterius"> Misterius</label>
+        <label><input type="checkbox" name="checklist" value="Dingin"> Dingin</label>
+        <label><input type="checkbox" name="checklist" value="Ganteng mwhehe"> Ganteng mwhehe</label>
+        <label><input type="checkbox" name="checklist" value="Jelek"> Jelek</label>
+        <label><input type="checkbox" name="checklist" value="Dongo"> Dongo</label>
+        <label><input type="checkbox" name="checklist" value="Tidak peduli"> Tidak peduli</label>
+      </div>
       <button onclick="submitRating()">Rate</button>
     </div>
   </div>
 
-  <script src="https://cdn.rawgit.com/bungfrangki/efeksalju/2a7805c7/efek-salju.js"></script>
   <script>
     function showModal() {
       var modal = document.getElementById("rateModal");
@@ -174,14 +192,21 @@
     function submitRating() {
       var rating = slider.value;
       var comment = document.getElementById("comment").value;
+      var checklist = document.querySelectorAll('input[name="checklist"]:checked');
+      var checklistValues = [];
+      checklist.forEach(function(item) {
+        checklistValues.push(item.value);
+      });
       var message;
-      if (rating >= 10 && rating <= 60) {
-        message = "Terima kasih atas penilaianmu.";
-      } else if (rating > 60 && rating <= 100) {
-        message = "Benarkah? Terima kasih, aku juga suka sifatmu.";
+      if (rating >= 10 && rating <= 40) {
+        message = "Makasih Tanggapan ny XD.";
+      } else if (rating >= 50 && rating <= 60) {
+        message = "hmm, tinggian lagi bisa kali xixi";
+      } else if (rating > 70 && rating <= 100) {
+        message = "Ah mang ea, wkwk Jadi Salting.";
       }
       alert(message);
-      var url = "https://wa.me/6288229683561?text=Rate: " + rating + "% | " + encodeURIComponent(comment);
+      var url = "https://wa.me/6288229683561?text=Rate: " + rating + "%20|%20Kamu%20itu:%20" + encodeURIComponent(checklistValues.join(', ')) + "%20|Pesan Untukmu:%20" + encodeURIComponent(comment);
       window.location.href = url;
     }
 
