@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Express Your Feelings</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url('https://telegra.ph/file/92ef76067cd94493745b1.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .container {
+      max-width: 90%;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .header {
+      background-image: url('https://i.ibb.co/8d33grw/tumblr-ppaq0f-Dy-B41ugxywdo1-1280.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      padding: 50px;
+      text-align: center;
+      color: #000;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    .header p {
+      font-size: 18px;
+      color: #000;
+    }
+
+    .love-button {
+      background-color: #ff4d4d;
+      color: #fff;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin: 30px auto;
+      display: block;
+    }
+
+    .love-button:hover {
+      background-color: #ff3333;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      border-radius: 10px;
+      animation-name: fadeIn;
+      animation-duration: 0.5s;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    textarea {
+      width: calc(100% - 20px); /* Sesuaikan lebar textarea */
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      resize: none;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @media screen and (min-width: 768px) {
+      .container {
+        max-width: 600px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <script src="https://cdn.rawgit.com/bungfrangki/efeksalju/2a7805c7/efek-salju.js"></script>
+
+  <!-- Autoplay musik -->
+  <audio autoplay loop>
+    <source src="https://d.top4top.io/m_30032s7ys0.m4a" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <div class="container">
+    <div class="header">
+      <h1>Express Your Feelings</h1>
+      <p>Hai, Kamu psti klik tautan ini, Aku Suka Sama kamu XD.</p>
+    </div>
+    <button class="love-button" onclick="showModal()">Click Here</button>
+  </div>
+
+  <div id="rateModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Bagaimana aku menurutmu?</h2>
+      <textarea id="comment" rows="3" placeholder="Berikan komentar..."></textarea>
+      <input type="range" min="10" max="100" value="50" class="slider" id="myRange" oninput="updateTextInput(this.value);">
+      <p>Rating: <span id="demo"></span>%</p>
+      <button onclick="submitRating()">Rate</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.rawgit.com/bungfrangki/efeksalju/2a7805c7/efek-salju.js"></script>
+  <script>
+    function showModal() {
+      var modal = document.getElementById("rateModal");
+      modal.style.display = "block";
+    }
+
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("demo");
+    output.innerHTML = slider.value;
+
+    slider.oninput = function() {
+      output.innerHTML = this.value;
+    }
+
+    function submitRating() {
+      var rating = slider.value;
+      var comment = document.getElementById("comment").value;
+      var message;
+      if (rating >= 10 && rating <= 60) {
+        message = "Terima kasih atas penilaianmu.";
+      } else if (rating > 60 && rating <= 100) {
+        message = "Benarkah? Terima kasih, aku juga suka sifatmu.";
+      }
+      alert(message);
+      var url = "https://wa.me/6288229683561?text=Rate: " + rating + "% | " + encodeURIComponent(comment);
+      window.location.href = url;
+    }
+
+    var modal = document.getElementById("rateModal");
+    var span = document.getElementsByClassName("close")[0];
+
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+</body>
+
+</html>
